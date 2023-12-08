@@ -9,8 +9,9 @@ function validation(select, validationFn) {
   let inputElement = selector(select);
 
   function handleInput() {
-    if (validationFn(this.value)) inputElement.classList.remove("is--invalid");
-    else inputElement.classList.add("is--invalid");
+    validationFn(this.value)
+      ? inputElement.classList.remove("is--invalid")
+      : inputElement.classList.add("is--invalid");
   }
   inputElement.addEventListener("input", handleInput);
 }
@@ -27,13 +28,11 @@ inputs.forEach(({ selector, validationFn }) =>
 const handleLoginClick = (e) => {
   e.preventDefault();
 
-  if (user.id === selector("#userEmail").value) {
-    if (user.pw === selector("#userPassword").value)
-      location.href = "welcome.html";
-    else alert("비밀번호를 확인해주세요");
-  } else {
-    alert("이메일을 확인해주세요");
-  }
+  user.id === selector("#userEmail").value
+    ? user.pw === selector("#userPassword").value
+      ? (location.href = "welcome.html")
+      : alert("비밀번호를 확인해주세요")
+    : alert("이메일을 확인해주세요");
 };
 
 selector(".btn-login").addEventListener("click", handleLoginClick);
