@@ -77,7 +77,6 @@ userPassword.addEventListener("input", (event) => {
 
   </tr>
 </table>
-![image]()
 
 - [x] 로그인 버튼을 클릭시 조건처리
 
