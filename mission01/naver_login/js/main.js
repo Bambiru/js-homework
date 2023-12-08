@@ -12,6 +12,7 @@ const user = {
 
 const userEmail = document.querySelector("#userEmail");
 const userPassword = document.querySelector("#userPassword");
+const btnLogin = document.querySelector(".btn-login");
 
 let email = "";
 userEmail.addEventListener("input", (event) => {
@@ -34,7 +35,17 @@ userPassword.addEventListener("input", (event) => {
     userPassword.classList.add("is--invalid");
   }
 });
-
+btnLogin.addEventListener("click", (e) => {
+  e.preventDefault();
+  if (user.id === email) {
+    if (user.pw === password) location.href = "welcome.html";
+    else {
+      alert("비밀번호를 확인해주세요");
+    }
+  } else {
+    alert("이메일을 확인해주세요");
+  }
+});
 function emailReg(text) {
   const re =
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
