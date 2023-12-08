@@ -3,49 +3,41 @@ const user = {
   pw: "spdlqj123!@",
 };
 
-/*
-1. email 정규표현식을 사용한 validation
-2. pw 정규표현식을 사용한 validation
-3. 상태 변수 관리
-4. 로그인 버튼을 클릭시 조건처리
-*/
+const selector = (select) => document.querySelector(select);
 
-const userEmail = document.querySelector("#userEmail");
-const userPassword = document.querySelector("#userPassword");
-const btnLogin = document.querySelector(".btn-login");
+function validation(select, validationFn) {
+  let inputElement = selector(select);
 
-let email = "";
-userEmail.addEventListener("input", (event) => {
-  email = event.target.value;
-
-  if (emailReg(email)) {
-    userEmail.classList.remove("is--invalid");
-  } else {
-    userEmail.classList.add("is--invalid");
+  function handleInput() {
+    if (validationFn(this.value)) inputElement.classList.remove("is--invalid");
+    else inputElement.classList.add("is--invalid");
   }
-});
+  inputElement.addEventListener("input", handleInput);
+}
 
-let password = "";
-userPassword.addEventListener("input", (event) => {
-  password = event.target.value;
+const inputs = [
+  { selector: "#userEmail", validationFn: emailReg },
+  { selector: "#userPassword", validationFn: pwReg },
+];
 
-  if (pwReg(password)) {
-    userPassword.classList.remove("is--invalid");
-  } else {
-    userPassword.classList.add("is--invalid");
-  }
-});
-btnLogin.addEventListener("click", (e) => {
+inputs.forEach(({ selector, validationFn }) =>
+  validation(selector, validationFn)
+);
+
+const handleLoginClick = (e) => {
   e.preventDefault();
-  if (user.id === email) {
-    if (user.pw === password) location.href = "welcome.html";
-    else {
-      alert("비밀번호를 확인해주세요");
-    }
+
+  if (user.id === selector("#userEmail").value) {
+    if (user.pw === selector("#userPassword").value)
+      location.href = "welcome.html";
+    else alert("비밀번호를 확인해주세요");
   } else {
     alert("이메일을 확인해주세요");
   }
-});
+};
+
+selector(".btn-login").addEventListener("click", handleLoginClick);
+
 function emailReg(text) {
   const re =
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
