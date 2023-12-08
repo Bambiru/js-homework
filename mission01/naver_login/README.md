@@ -119,15 +119,18 @@ btnLogin.addEventListener("click", (e) => {
   </tr>
 </table>
 
-- [x] 코드 리팩토링
-  - [x] `validationFn`을 이용하여 정규식을 체크한다.
-    - [x] 맞다면 `classList.remove`를 이용하여 `is--invalid`를 제거한다.
-    - [x] 틀렸다면 `classList.add`를 이용하여 `is--invalid`를 추가하여 에러메세지를 나타낸다.
-  - [x] `handleLoginClick`함수를 이용하여 아이디와 비밀번호를 체크한다.
-    - [x] 입력한 값과 `user` 객체 안의 `id`와 `pw` 와 비교한다.
-      - [x] 아이디와 패스워드가 일치한다면, `location.href`를 이용하여 `welcome.html`로 이동한다.
-      - [x] 아이디가 일치하지 않을 시, 경고메세지를 띄운다.
-      - [x] 패스워드가 일치하지 않을 시, 경고메세지를 띄운다.
+---
+
+### 코드 리팩토링
+
+- [x] `validationFn`을 이용하여 정규식을 체크한다.
+  - [x] 맞다면 `classList.remove`를 이용하여 `is--invalid`를 제거한다.
+  - [x] 틀렸다면 `classList.add`를 이용하여 `is--invalid`를 추가하여 에러메세지를 나타낸다.
+- [x] `handleLoginClick`함수를 이용하여 아이디와 비밀번호를 체크한다.
+  - [x] 입력한 값과 `user` 객체 안의 `id`와 `pw` 와 비교한다.
+    - [x] 아이디와 패스워드가 일치한다면, `location.href`를 이용하여 `welcome.html`로 이동한다.
+    - [x] 아이디가 일치하지 않을 시, 경고메세지를 띄운다.
+    - [x] 패스워드가 일치하지 않을 시, 경고메세지를 띄운다.
 
 ```
 const user = {
@@ -183,3 +186,9 @@ function pwReg(text) {
 }
 
 ```
+
+---
+
+- 중복되는 부분들을 리팩토링하며 조금씩 간결하게 만들어보니 실력이 많이 늘었다는 걸 느낀다.
+- 힌트를 많이 주신덕에 해결했지만,
+  나중에는 혼자서 다시 이 코드를 아무렇지 않게 구현할 수 있었으면 좋겠다.
