@@ -1,29 +1,82 @@
-/* 1. 이벤트 처리 방식을 사용하여 클릭 이벤트를 걸어주세요.
-    1. 이벤트 위임
-    2. 반복문
-2. 이미지와 색상의 데이터는 `data.js` 에서 불러와주세요.
-3. 각 li 항목들을 클릭하면 배경 색상과 메인 비주얼 이미지를 변경해주세요.
-    1. 배경색 변경 ( colorB의 기본값은 `#000` 으로 한다 )
-    
-    ```jsx
-    elem.style.background = `linear-gradient(to bottom, 'colorA','colorB')`;
-    ```
-    
-      b. 이미지 변경
-    
-    ```jsx
-    target.src = `./assets/${data.name}.jpeg`;
-    target.alt = data.alt;
-    ```
-    
-4. 비주얼이 변경되면 상단에 비주얼에 맞는 이름으로 변경해주세요.
-    
-    ```jsx
-    target.textContent = data.name;
-    ```
-    
-5. 함수를 분리시켜주세요.
-    1. `setBgColor` 함수
-    2. `setImage` 함수
-    3. `setNameText` 함수
-6. 가독성이 좋은 코드로 리팩토링 해주세요. */
+(function () {
+  const nav = getNode(".nav ul");
+  let currentAudio;
+
+  /* 이벤트 핸들러 함수 */
+  function handleClick(e) {
+    const li = e.target.closest("li");
+    if (!li) return;
+    const index = li.dataset.index;
+
+    removeActiveClass(nav.children);
+    addActiveClass(li);
+
+    setAudio(index);
+    setBgColor("body", index);
+    setImage(".visual img", index);
+    setNameText(".nickName", index);
+  }
+
+  /* isActive 함수 */
+  function removeActiveClass(children) {
+    const list = [...children];
+
+    list.forEach((li) => {
+      li.classList.remove("is-active");
+    });
+  }
+  function addActiveClass(node) {
+    node.classList.add("is-active");
+  }
+  /* 오디오 설정 함수 */
+  function setAudio(index) {
+    const audio = createAudio(index);
+    playAudio(audio);
+    adjustVolume(audio, index);
+  }
+  function createAudio(index) {
+    let audio = new Audio(
+      `./assets/audio/${data[index - 1].name.toLowerCase()}.m4a`
+    );
+
+    if (currentAudio) {
+      currentAudio.pause();
+    }
+    currentAudio = audio;
+    return audio;
+  }
+  function playAudio(audio) {
+    audio.play();
+  }
+  function adjustVolume(audio, index) {
+    if (data[index - 1].name === "WADE" || data[index - 1].name === "GALE") {
+      audio.volume = 0.2;
+    }
+  }
+
+  /* background 변경 함수 */
+  function setBgColor(node, index) {
+    if (typeof node === "string") node = getNode(node);
+
+    node.style.background = `
+    linear-gradient(to bottom,${data[index - 1].color[0]},
+      ${data[index - 1].color[1]})`;
+  }
+
+  /* img 변경 함수 */
+  function setImage(node, index) {
+    if (typeof node === "string") node = getNode(node);
+
+    node.src = `./assets/${data[index - 1].name.toLowerCase()}.jpeg`;
+    node.alt = data[index - 1].alt;
+  }
+
+  /* 이름 변경 함수 */
+  function setNameText(node, index) {
+    if (typeof node === "string") node = getNode(node);
+    node.textContent = data[index - 1].name;
+  }
+
+  /* 이벤트 위임 */
+  nav.addEventListener("click", handleClick);
+})();
