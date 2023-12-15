@@ -34,7 +34,7 @@
     if (typeof node === "string") node = getNode(node);
 
     const colorA = data[index - 1].color[0];
-    const colorB = data[index - 1].color[1];
+    const colorB = data[index - 1].color[1] || "#000";
 
     node.style.background = `linear-gradient(to bottom,${colorA},${colorB})`;
   }
