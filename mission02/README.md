@@ -3,28 +3,158 @@
 ## 엘리멘탈
 
 - [x] 이벤트 위임을 이용한 이벤트 처리
-      // 3. 각 li 항목들을 클릭하면 배경 색상과 메인 비주얼 이미지를 변경해주세요.
-      // 1. 배경색 변경 ( colorB의 기본값은 `#000` 으로 한다 )
+- [x] 전역을 보호하기 위해 즉시실행함수(IIFE) 사용
+- [x] 코드의 가독성을 위해 함수 분리
 
-// `` jsx
-//     elem.style.background = `linear-gradient(to bottom, 'colorA','colorB')`;
-//      ``
+- [isActive 함수](#isactive-함수)
+- [background 변경 함수](#background-변경-함수)
+- [img 변경 함수](#img-변경-함수)
+- [이름 변경 함수](#이름-변경-함수)
+- [오디오 설정 함수](#오디오-설정-함수)
 
-// b. 이미지 변경
+<table>
+<tr>
+      <td>앰버 EMBER</td>
+      <td>웨이드 WADE</td>
+      <td>클로드 CLOD</td>
+      <td>게일 GALE</td>
+</tr>
+<tr>
+      <td>
+      <img src="https://github.com/Bambiru/js-homework/assets/116716953/0f0d0d13-37aa-41fd-bba3-406b917361ee" height="150px"/>
+      </td>
+      <td>
+      <img src="https://github.com/Bambiru/js-homework/assets/116716953/3dce23d4-62c3-463b-bdad-e34b4ac78045" height="150px"/>
+      </td>
+      <td>
+      <img src="https://github.com/Bambiru/js-homework/assets/116716953/f80a5246-e0ef-4c22-9649-0c9f5c5aff3e" height="150px"/>
+      </td>
+      <td>
+      <img src="https://github.com/Bambiru/js-homework/assets/116716953/12f90260-8ca2-4072-97ef-71a51c4ae816" height="150px"/>
+      </td>
+</tr>
+</table>
 
-// `` jsx
-//     target.src = `./assets/${data.name}.jpeg`;
-//     target.alt = data.alt;
-//      ``
+#### isActive 함수
 
-// 4. 비주얼이 변경되면 상단에 비주얼에 맞는 이름으로 변경해주세요.
+##### isActiveClass
 
-// `jsx
-//     target.textContent = data.name;
-//     `
+```js
+function isActiveClass(reset, add) {
+  resetActiveClass(reset);
+  addActiveClass(add);
+}
+```
 
-// 5. 함수를 분리시켜주세요.
-// 1. `setBgColor` 함수
-// 2. `setImage` 함수
-// 3. `setNameText` 함수
-// 6. 가독성이 좋은 코드로 리팩토링 해주세요.
+##### resetActiveClass
+
+```js
+function resetActiveClass(children) {
+  const list = [...children];
+
+  list.forEach((li) => {
+    li.classList.remove("is-active");
+  });
+}
+```
+
+##### addActiveClass
+
+```js
+function addActiveClass(node) {
+  node.classList.add("is-active");
+}
+```
+
+---
+
+#### background 변경 함수
+
+##### setBgColor
+
+```js
+function setBgColor(node, index) {
+  if (typeof node === "string") node = getNode(node);
+
+  const colorA = data[index - 1].color[0];
+  const colorB = data[index - 1].color[1] || "#000";
+
+  node.style.background = `linear-gradient(to bottom,${colorA},${colorB})`;
+}
+```
+
+---
+
+#### img 변경 함수
+
+##### setImage
+
+```js
+function setImage(node, index) {
+  if (typeof node === "string") node = getNode(node);
+
+  node.src = `./assets/${data[index - 1].name.toLowerCase()}.jpeg`;
+  node.alt = data[index - 1].alt;
+}
+```
+
+---
+
+#### 이름 변경 함수
+
+##### setNameText
+
+```js
+function setNameText(node, index) {
+  if (typeof node === "string") node = getNode(node);
+
+  node.textContent = data[index - 1].name;
+}
+```
+
+---
+
+#### 오디오 설정 함수
+
+##### setAudio
+
+```js
+function setAudio(index) {
+  const audio = createAudio(index);
+  playAudio(audio);
+  adjustVolume(audio, index);
+}
+```
+
+##### createAudio
+
+```js
+function createAudio(index) {
+  let audio = new Audio(
+    `./assets/audio/${data[index - 1].name.toLowerCase()}.m4a`
+  );
+
+  if (currentAudio) {
+    currentAudio.pause();
+  }
+  currentAudio = audio;
+  return audio;
+}
+```
+
+##### playAudio
+
+```js
+function playAudio(audio) {
+  audio.play();
+}
+```
+
+##### adjustVolume
+
+```js
+function adjustVolume(audio, index) {
+  if (data[index - 1].name === "WADE" || data[index - 1].name === "GALE")
+    audio.volume = 0.2;
+}
+```
