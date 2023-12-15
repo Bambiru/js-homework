@@ -40,30 +40,25 @@
 ##### isActiveClass
 
 ```js
-function isActiveClass(reset, add) {
+const isActiveClass = (reset, add) => {
   resetActiveClass(reset);
   addActiveClass(add);
-}
+};
 ```
 
 ##### resetActiveClass
 
 ```js
-function resetActiveClass(children) {
+const resetActiveClass = (children) => {
   const list = [...children];
-
-  list.forEach((li) => {
-    li.classList.remove("is-active");
-  });
-}
+  list.forEach((li) => li.classList.remove("is-active"));
+};
 ```
 
 ##### addActiveClass
 
 ```js
-function addActiveClass(node) {
-  node.classList.add("is-active");
-}
+const addActiveClass = (node) => node.classList.add("is-active");
 ```
 
 ---
@@ -73,14 +68,14 @@ function addActiveClass(node) {
 ##### setBgColor
 
 ```js
-function setBgColor(node, index) {
+const setBgColor = (node, index) => {
   if (typeof node === "string") node = getNode(node);
 
   const colorA = data[index - 1].color[0];
   const colorB = data[index - 1].color[1] || "#000";
 
   node.style.background = `linear-gradient(to bottom,${colorA},${colorB})`;
-}
+};
 ```
 
 ---
@@ -90,12 +85,12 @@ function setBgColor(node, index) {
 ##### setImage
 
 ```js
-function setImage(node, index) {
+const setImage = (node, index) => {
   if (typeof node === "string") node = getNode(node);
 
   node.src = `./assets/${data[index - 1].name.toLowerCase()}.jpeg`;
   node.alt = data[index - 1].alt;
-}
+};
 ```
 
 ---
@@ -105,11 +100,11 @@ function setImage(node, index) {
 ##### setNameText
 
 ```js
-function setNameText(node, index) {
+const setNameText = (node, index) => {
   if (typeof node === "string") node = getNode(node);
 
   node.textContent = data[index - 1].name;
-}
+};
 ```
 
 ---
@@ -119,17 +114,17 @@ function setNameText(node, index) {
 ##### setAudio
 
 ```js
-function setAudio(index) {
+const setAudio = (index) => {
   const audio = createAudio(index);
   playAudio(audio);
   adjustVolume(audio, index);
-}
+};
 ```
 
 ##### createAudio
 
 ```js
-function createAudio(index) {
+const createAudio = (index) => {
   let audio = new Audio(
     `./assets/audio/${data[index - 1].name.toLowerCase()}.m4a`
   );
@@ -139,22 +134,20 @@ function createAudio(index) {
   }
   currentAudio = audio;
   return audio;
-}
+};
 ```
 
 ##### playAudio
 
 ```js
-function playAudio(audio) {
-  audio.play();
-}
+const playAudio = (audio) => audio.play();
 ```
 
 ##### adjustVolume
 
 ```js
-function adjustVolume(audio, index) {
+const adjustVolume = (audio, index) => {
   if (data[index - 1].name === "WADE" || data[index - 1].name === "GALE")
     audio.volume = 0.2;
-}
+};
 ```
